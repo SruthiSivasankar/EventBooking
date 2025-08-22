@@ -18,7 +18,7 @@ exports.createEvent = async (req, res) => {
       createdBy: userId ?? null,
     });
 
-    res.status(201).json({ message: 'Event created', event });
+    res.status(200).json({ message: 'Event created', event });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -29,7 +29,7 @@ exports.getAllEvents = async (req, res) => {
     const events = await Event.findAll({ order: [['startDate', 'ASC']] });
     res.json(events);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -39,7 +39,7 @@ exports.getEventById = async (req, res) => {
     if (!event) return res.status(404).json({ message: 'Event not found' });
     res.json(event);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -65,6 +65,6 @@ exports.deleteEvent = async (req, res) => {
     await event.destroy();
     res.json({ message: 'Event deleted' });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };
